@@ -24,14 +24,16 @@ cp .env.example .env.local
 The environment is selected with TEST_ENV (defaults to local).
 
 ## Running the tests
-Make sure that web app is running locally.
+Make sure that web app under test is running locally.
+To execute all the tests, issue this command.
 ```
 npm run test:local
 ```
+
 ## How it works
-- Login once: e2e/login.setup.ts signs in as the demo user and saves the session. All other tests reuse it, so they start already logged in.
-- Clean cart for every test: the cart lives in the browser's localStorage, so each test gets its own empty cart, even when tests run in parallel with one user.
-- Page Object Model: locators and actions live in pages/; tests in e2e/ describe behaviour only.
+- Login once: e2e/login.setup.ts signs in as the demo user and saves the session. All other tests reuse it, so they start already logged in. This saves overall test execution time.
+- Clean cart for every test: the cart lives in the browser's localStorage, so each test gets its own empty cart, even when tests run in parallel with one user. This adds stability to the tests.
+- Page Object Model: locators and actions live in pages/ tests in e2e/ describe behaviour only.
 Accessible locators: elements are found by role, label and visible text, the same way users and assistive technology find them.
 - Independent expected values: expected totals are calculated from product prices, not read back from the app.
 
