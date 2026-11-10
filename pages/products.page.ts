@@ -29,20 +29,17 @@ export class ProductsPage {
         await expect(this.pageHeading).toBeVisible();
     }
 
-    /** Locator for a single product card, found by its exact name. */
     productCard(name: string): Locator {
         return this.productCards.filter({
             has: this.page.getByRole('heading', { level: 3, name, exact: true }),
         });
     }
 
-    /** Names of all products currently listed, in display order. */
     async getProductNames(): Promise<string[]> {
         await expect(this.productCards.first()).toBeVisible();
         return this.productCards.getByRole('heading', { level: 3 }).allInnerTexts();
     }
 
-    /** Names and prices of all products currently listed. */
     async getProducts(): Promise<ProductSummary[]> {
         const names = await this.getProductNames();
         return Promise.all(
@@ -50,7 +47,6 @@ export class ProductsPage {
         );
     }
 
-    /** Price of a product in pounds, e.g. 19.99. */
     async getProductPrice(name: string): Promise<number> {
         const priceText = await this.productCard(name)
             .getByText(/^£\d+\.\d{2}$/)
@@ -62,11 +58,9 @@ export class ProductsPage {
         return price;
     }
 
-    /** Hovers over a product card, clicks "Add to cart" and checks the confirmation toast. */
     async addToCart(name: string) {
         const card = this.productCard(name);
         await card.hover();
         await card.getByRole('button', { name: 'Add to cart' }).click();
-        // await this.toast.expectMessage(`${name} added to cart`);
     }
 }
