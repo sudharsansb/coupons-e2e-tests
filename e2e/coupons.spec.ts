@@ -39,9 +39,6 @@ test.describe('Shopping Cart', () => {
             );
             productsToAdd = uniqueProducts.slice(0, 2); // Add >1 product to verify coupons apply on all products
             expect(productsToAdd).toHaveLength(2);
-            for (const product of productsToAdd) {
-                console.log(`${product.name}: ${product.price.toFixed(2)}`);
-            }
         });
 
         await test.step('Ensure Cart is empty before adding products', async () => {
